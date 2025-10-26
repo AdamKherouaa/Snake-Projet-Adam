@@ -1,0 +1,260 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas{
+            border: 10px solid
+
+        }
+        body {
+            display: flex;            
+            flex-direction: column;   
+            align-items: center;      
+            justify-content: center;  
+            min-height: 100vh;
+            background-color: rgb(29, 28, 28) ;     
+            overflow: hidden;
+        }
+
+        #snake {                    
+            display:flex;
+            align-items: center;
+            justify-content: center;
+            background: conic-gradient(
+                #e4e696 90deg,
+                #94976d 90deg 180deg,
+                #e4e696 180deg 270deg,
+                #94976d 270deg 360deg
+            );
+            background-repeat: repeat;
+            background-size: 40px 40px;
+            background-position: top left;
+            
+        }
+
+
+        #Rejouer {
+            
+            border: grey;
+            margin: 10;
+            background: linear-gradient(#014706, #027428);
+            width: 100;
+            height: 50;
+            border-radius: 10px;
+            text-align: center;
+            text-shadow: 1px 1px 1px #000;
+            cursor: pointer;
+            color: rgb(0, 0, 0);
+            font-size: 1rem;
+            
+
+        }
+
+        #Rejouer:active {
+            box-shadow:
+                inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+                inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+        }
+
+        #Rejouer:hover{
+            
+            background-color: linear-gradient(#027428, #014706);
+            }
+
+        #bienvenu {
+            color: rgb(0, 0, 0);
+            font-size: 100px;
+            border-color: grey;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+
+
+
+        
+        
+            
+
+
+             
+
+
+        }
+        .cache {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+ <button id ="Rejouer">Rejouer</button>
+ <a id ="bienvenu"> Snake</A>
+
+ <canvas width="400px" height="400px" id="snake"></canvas>
+ <script>
+       const Rejouer = document.getElementById("Rejouer")
+       const canvas = document.querySelector("canvas")
+       const context = canvas.getContext('2d')
+    
+
+       
+       let box = 20
+       let game
+       let etatDuJeu = "menu"
+       let newHead = {}
+       let snake = []
+
+       let food = {}
+       let score = 0
+       let d
+
+        
+       Rejouer.classList.add("cache");
+
+       document.addEventListener("keydown", direction);
+
+        function collision(head, array){
+        for(let g =0 ; g < array.length; g++){
+        if(head.x == array[g].x && head.y == array[g].y){
+                return true;
+                        }
+                    }
+            return false
+                }
+
+        
+
+       function direction(event){                         
+           let key = event.keyCode;
+           if(key == 37 && d != "RIGHT"){
+              d = "LEFT";
+           } else if (key == 38 && d != "DOWN"){
+             d = "UP";
+           } else if (key == 39 && d != "LEFT"){
+            d = "RIGHT";
+           } else if (key == 40 && d != "UP"){
+            d = "DOWN";
+           }
+       }
+
+       function stopGame(){
+        etatDuJeu = "perdu";
+        Rejouer.classList.remove("cache");
+        
+       }
+
+       Rejouer.addEventListener("click", startGame);
+
+       function startGame(){
+        score = 0;
+        snake= [{ x: 10*box, y: 10*box }] 
+        food = {
+           x: Math.floor(Math.random() * 15 + 1) * box,
+           y: Math.floor(Math.random() * 15 + 1) * box
+       }
+        d = null;
+        etatDuJeu = "enJeu";
+        Rejouer.classList.add("cache");
+
+       }
+
+       function gameLoop(){
+                if (etatDuJeu === "enJeu"){
+                    context.clearRect(0, 0, 400, 400)
+
+                    for(let i = 0; i < snake.length; i++ ){
+                            context.fillStyle = (i == 0) ? "black" : "green"  
+                            context.fillRect(snake[i].x, snake[i].y, box, box) 
+                            context.strokeStyle ="black" 
+                            context.strokeRect(snake[i].x, snake[i].y, box, box);
+                    }
+
+                    context.font = `${box}px Arial`
+                    context.textAlign = "start";
+                    context.textBaseline='top';            
+                    context.fillText('🍎',food.x, food.y, box, box); 
+
+                   let snakeX = snake[0].x
+                   let snakeY = snake[0].y
+
+                    if(d == "LEFT") snakeX -= box;
+                    if(d == "UP")    snakeY -= box; 
+                    if(d == "RIGHT") snakeX += box;
+                    if(d == "DOWN") snakeY += box;
+
+
+                    if(snakeX == food.x && snakeY == food.y){   
+                        score++;
+                        food ={
+                                x: Math.floor(Math.random() * 15 + 1) * box,
+                            y: Math.floor(Math.random() * 15 + 1) * box
+                        }
+                    } else {
+                            snake.pop()  
+                    }
+
+
+                    newHead = {
+                    x: snakeX,
+                    y: snakeY }
+                
+
+
+                    if(snakeX < 0 || snakeY < 0 || snakeX > 19*box || snakeY > 19*box || collision(newHead, snake)){
+                        stopGame()
+                        return;
+
+                    }
+
+                    snake.unshift (newHead);
+
+                    context.fillStyle ="Black"
+                    context.font = `${30}px pacifico strong`
+                    context.fillText("score : " + score, 0.5*box, 0.5*box) 
+
+                
+                
+                
+                }
+                else if (etatDuJeu ==="perdu"){
+                            context.fillStyle="red"
+                            context.font ="30px Arial"
+                            context.textAlign= "center";
+                            context.textBaseline ="middle";
+                            context.fillText("GAME OVER", canvas.width/2, canvas.height/2) 
+                }
+                else if (etatDuJeu ==="menu"){
+                    context.fillStyle ="Black"
+                    context.font="20px Pacifico"
+                    context.textAlign= "center";
+                    context.textBaseline ="middle";
+                    context.fillText("Cliquez pour commencer", canvas.width/2, canvas.height/2)
+
+                    Rejouer.classList.remove("cache");
+                }
+
+                else{
+                    return false
+                }
+
+
+
+            
+        
+            }
+            game = setInterval(gameLoop, 120);
+
+
+
+                
+
+
+
+
+
+
+
+
+   </script>
+</body>
+</html>
