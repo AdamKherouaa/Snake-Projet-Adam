@@ -83,21 +83,65 @@
         .cache {
             display: none;
         }
+        #stop-button{
+            display: none;
+        }
+
+        
 
     </style>
 </head>
 <body>
- <button id ="Rejouer">Rejouer</button>
+ <button id ="Rejouer">Jouer</button>
  <a id ="bienvenu"> Snake</A>
+<figure><Audio src="super-mario-death-sound-sound-effect.mp3" autoplay id="mario"></Audio>
+<audio id="yoshi" src="yoshi-tongue.mp3" autoplay></audio> 
+<audio id ="fond" src="level-iv-339695.mp3" autoplay loop></audio>
+       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-play-circle" viewBox="0 0 16 16" id="play-button">
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+  <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445"/>
+</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-pause-circle" viewBox="0 0 16 16" id="stop-button">
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+  <path d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0z"/>
+</svg></figure>
 
  <canvas width="400px" height="400px" id="snake"></canvas>
+ <script>
+    const play = document.querySelector("#play-button")
+    const pause = document.querySelector("#stop-button")
+    let fond = document.querySelector("#fond")
+
+    fond.volume = 0.02;
+
+
+
+    play.addEventListener("click", function(){
+        fond.play()
+        pause.style.display ="initial";
+        this.style.display = "none";
+    });
+
+    pause.addEventListener("click", function(){
+        fond.pause()
+        play.style.display ="initial";
+        this.style.display ="none"
+    });
+
+     
+ </script>
  <script>
        const Rejouer = document.getElementById("Rejouer")
        const canvas = document.querySelector("canvas")
        const context = canvas.getContext('2d')
     
 
-       
+       let Audio = document.querySelector("#mario")
+       let sound = document.querySelector("#yoshi")
+
+       Audio.volume = 0.04
+       sound.volume = 0.05
+    
        let box = 20
        let game
        let etatDuJeu = "menu"
@@ -124,6 +168,8 @@
 
         
 
+        
+
        function direction(event){                         
            let key = event.keyCode;
            if(key == 37 && d != "RIGHT"){
@@ -139,9 +185,16 @@
 
        function stopGame(){
         etatDuJeu = "perdu";
-        Rejouer.classList.remove("cache");
-        
+        Audio.play();
+
+                setTimeout(function() {
+                context.clearRect(0, 0, 400, 400)
+                etatDuJeu = "menu";
+                Rejouer.classList.remove("cache");
+                }, 6000);
+
        }
+
 
        Rejouer.addEventListener("click", startGame);
 
@@ -150,7 +203,7 @@
         snake= [{ x: 10*box, y: 10*box }] 
         food = {
            x: Math.floor(Math.random() * 15 + 1) * box,
-           y: Math.floor(Math.random() * 15 + 1) * box
+           y: Math.floor(Math.random() * 15 + 1) * box 
        }
         d = null;
         etatDuJeu = "enJeu";
@@ -185,6 +238,7 @@
 
                     if(snakeX == food.x && snakeY == food.y){   
                         score++;
+                        sound.play()
                         food ={
                                 x: Math.floor(Math.random() * 15 + 1) * box,
                             y: Math.floor(Math.random() * 15 + 1) * box
@@ -209,8 +263,8 @@
                     snake.unshift (newHead);
 
                     context.fillStyle ="Black"
-                    context.font = `${30}px pacifico strong`
-                    context.fillText("score : " + score, 0.5*box, 0.5*box) 
+                    context.font = `${20}px pacifico strong`
+                    context.fillText("Score : " + score , 0.10*box+10 , 0.10*box+10) 
 
                 
                 
@@ -222,13 +276,14 @@
                             context.textAlign= "center";
                             context.textBaseline ="middle";
                             context.fillText("GAME OVER", canvas.width/2, canvas.height/2) 
+                            
                 }
                 else if (etatDuJeu ==="menu"){
                     context.fillStyle ="Black"
                     context.font="20px Pacifico"
                     context.textAlign= "center";
                     context.textBaseline ="middle";
-                    context.fillText("Cliquez pour commencer", canvas.width/2, canvas.height/2)
+                    context.fillText("Cliquez sur Jouer pour commencer", canvas.width/2, canvas.height/2)
 
                     Rejouer.classList.remove("cache");
                 }
