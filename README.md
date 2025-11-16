@@ -4,7 +4,9 @@ Je m'appelle Adam et je présente ce projet dans le cadre de ma candidature en L
 
 Actuellement en réorientation, j'ai conscience des lacunes de mon dossier scolaire. C'est pourquoi j'ai dédié ces derniers mois à monter en compétences de manière autonome en Java et en algorithmique, afin de prouver ma motivation et ma capacité à réussir dans ce cursus.
 
-Ce projet "Snake" est une réalisation concrète qui démontre ma compréhension des concepts fondamentaux de la programmation.
+Ce projet "Snake" est une réalisation concrète qui démontre ma compréhension des concepts fondamentaux de la programmation.  
+
+Voici le lien du site : "https://adamkherouaa.github.io/Snake_de_Adam"
 
 ---
 
