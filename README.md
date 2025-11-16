@@ -8,14 +8,14 @@ Ce projet "Snake" est une réalisation concrète qui démontre ma compréhension
 
 ---
 
-## 📸 Aperçu
+## Aperçu
 
 <img width="1869" height="915" alt="image" src="https://github.com/user-attachments/assets/9ddc5e86-90a2-4821-b8f5-82da0d421dfb" />
 
 
 ---
 
-## 🧠 Concepts Abordés (Lien avec la L1)
+## Concepts Abordés (Lien avec la L1)
 
 Ce projet n'est pas un simple jeu ; c'est une application pratique des concepts clés qui sont, d'après mes recherches, au cœur des modules de L1 (`ip1`, `pf1`) et de S2 (POO, Structures de Données).
 
@@ -34,7 +34,7 @@ Ce projet n'est pas un simple jeu ; c'est une application pratique des concepts 
 
 ---
 
-## 🛠️ Extrait de Code
+## Extrait de Code
 
 Voici un aperçu de la gestion de la logique de déplacement et de collision :
 
