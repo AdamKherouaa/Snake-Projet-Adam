@@ -6,7 +6,7 @@ Actuellement en réorientation, j'ai conscience des lacunes de mon dossier scola
 
 Ce projet "Snake" est une réalisation concrète qui démontre ma compréhension des concepts fondamentaux de la programmation.  
 
-Voici le lien du site : "https://adamkherouaa.github.io/Snake_de_Adam"
+Voici le lien du site : "https://adamkherouaa.github.io/Snake-Projet-Adam/"
 
 ---
 
